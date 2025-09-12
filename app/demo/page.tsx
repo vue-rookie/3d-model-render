@@ -55,7 +55,7 @@ const modelOptions = [
 function LoadingSpinner() {
   return (
     <Html center>
-      <div className="flex flex-col items-center space-y-4 text-white">
+      <div className="flex flex-col items-center space-y-4 text-white min-w-[200px]">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400"></div>
         <p className="text-lg">加载3D模型中...</p>
       </div>

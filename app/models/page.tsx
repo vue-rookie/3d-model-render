@@ -386,7 +386,7 @@ function Model3D({
 function LoadingIndicator() {
   return (
     <Html center>
-      <div className="bg-blue-600/90 text-white p-6 rounded-xl backdrop-blur-sm border border-blue-400/30">
+      <div className="bg-blue-600/90 text-white p-6 rounded-xl backdrop-blur-sm border border-blue-400/30 min-w-[200px]">
         <div className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full mx-auto mb-4"></div>
         <p className="text-lg font-semibold">加载3D模型中...</p>
         <p className="text-sm opacity-80">请稍候</p>
@@ -516,7 +516,7 @@ export default function ModelsPage() {
       </Canvas>
 
       <div
-        className={`absolute top-4 left-4 transition-transform duration-300 ease-in-out ${isPanelCollapsed ? "-translate-x-72" : "translate-x-0"}`}
+        className={`absolute top-4 left-0 transition-transform duration-300 ease-in-out ${isPanelCollapsed ? "-translate-x-80" : "translate-x-0"}`}
       >
         <div className="flex items-start">
           <Card className="bg-black/80 border-slate-600 backdrop-blur-sm w-80">

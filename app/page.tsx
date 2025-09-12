@@ -7,7 +7,7 @@ import { useFrame } from "@react-three/fiber"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, Cable as Cube, Zap, Code, Play } from "lucide-react"
+import { ArrowRight, Cable as Cube, User, Zap, Play } from "lucide-react"
 
 function AnimatedGeometry() {
   const sphereRef = useRef<any>()
@@ -66,7 +66,7 @@ export default function Home() {
               关于
             </a>
             <Link href="/models">
-              <Button className="bg-cyan-500 hover:bg-cyan-600 text-black">开始使用</Button>
+              <Button className="bg-white hover:bg-gray-800 text-black">开始使用</Button>
             </Link>
           </nav>
         </div>
@@ -111,15 +111,16 @@ export default function Home() {
             style={{ animationDelay: "0.4s" }}
           >
             <Link href="/models">
-              <Button size="lg" className="text-lg px-8 py-4 bg-black-300 hover:bg-black-600 text-white">
+              <Button size="lg" className="cursor-pointer text-lg px-8 py-4 bg-white hover:opacity-90 text-black">
                 立即开始 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link href="/demo">
               <Button
-                variant="outline"
+                
                 size="lg"
-                className="text-lg px-8 py-4 bg-transparent border-gray-600 text-white hover:bg-gray-800"
+                style={{ border: "1px solid white" }}
+                className="cursor-pointer text-lg px-8 py-4 bg-transparent text-white hover:opacity-90 border-white"
               >
                 <Play className="mr-2 h-5 w-5" />
                 观看演示
@@ -129,7 +130,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="features" className="py-20 bg-gray-900">
+      <section id="features" className="py-20 bg-black">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">强大功能</h2>
@@ -160,22 +161,22 @@ export default function Home() {
             <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-2 bg-gray-800 border-gray-700">
               <CardContent className="p-8 text-center">
                 <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-red-500/30 transition-colors">
-                  <Code className="h-8 w-8 text-red-400" />
+                  <User className="h-8 w-8 text-red-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">开发者友好</h3>
-                <p className="text-gray-300">基于React和Three.js构建，提供简洁的API和完整的文档支持</p>
+                <h3 className="text-2xl font-bold text-white mb-4">用户友好</h3>
+                <p className="text-gray-300">免费使用，无需注册，无需登录</p>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-r from-cyan-600 to-blue-600 text-white">
+      <section className="py-20 bg-gradient-to-r from-black text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">准备开始了吗？</h2>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">立即体验我们的3D模型查看器，探索无限的创意可能性</p>
           <Link href="/models">
-            <Button size="lg" className="text-lg px-8 py-4 bg-white text-cyan-600 hover:bg-gray-100">
+            <Button size="lg" className="text-lg px-8 py-4 bg-white  hover:bg-gray-100">
               开始探索 <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
