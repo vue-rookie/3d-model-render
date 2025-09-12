@@ -701,7 +701,7 @@ export default function ModelsPage() {
             onClick={() => setIsPanelCollapsed(!isPanelCollapsed)}
             size="sm"
             variant="outline"
-            className="ml-2 mt-4 border-slate-600 text-white hover:bg-slate-700 bg-black/80 backdrop-blur-sm"
+            className="cursor-pointer ml-2 mt-4 border-slate-600 text-white hover:bg-slate-700 bg-black/80 backdrop-blur-sm"
           >
             {isPanelCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
           </Button>

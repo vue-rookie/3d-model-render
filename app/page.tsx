@@ -59,12 +59,12 @@ export default function Home() {
             <a href="#features" className="text-gray-300 hover:text-white transition-colors">
               功能
             </a>
-            <a href="#examples" className="text-gray-300 hover:text-white transition-colors">
+            {/* <a href="#examples" className="text-gray-300 hover:text-white transition-colors">
               示例
             </a>
             <a href="#about" className="text-gray-300 hover:text-white transition-colors">
               关于
-            </a>
+            </a> */}
             <Link href="/models">
               <Button className="bg-white hover:bg-gray-800 text-black">开始使用</Button>
             </Link>
