@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { Canvas, useFrame } from "@react-three/fiber"
-import { OrbitControls, Environment, PerspectiveCamera, useGLTF, useFBX, Html, Text } from "@react-three/drei"
+import { OrbitControls, PerspectiveCamera, useGLTF, useFBX, Html, Text } from "@react-three/drei"
 import { Suspense, useState, useRef, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -464,7 +464,7 @@ export default function ModelsPage() {
           <PerspectiveCamera makeDefault position={[5, 3, 5]} fov={60} />
 
           {/* 环境和光照 */}
-          <Environment preset="studio" />
+          {/* 使用本地环境光照替代外部HDRI */}
           <ambientLight intensity={0.3} />
           <directionalLight
             position={[10, 10, 5]}

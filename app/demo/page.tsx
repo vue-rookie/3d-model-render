@@ -1,7 +1,7 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Environment, useGLTF, Html, Text } from "@react-three/drei"
+import { OrbitControls, useGLTF, Html, Text } from "@react-three/drei"
 import { Suspense, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -179,7 +179,7 @@ export default function DemoPage() {
       <div className="h-screen relative">
         <Canvas shadows camera={{ position: [0, 0, 5], fov: 50 }} className="bg-gradient-to-b from-gray-900 to-black">
           <Suspense fallback={<LoadingSpinner />}>
-            <Environment preset="night" />
+            {/* 使用本地环境光照替代外部HDRI */}
             <ambientLight intensity={0.3} />
             <directionalLight
               position={[10, 10, 5]}

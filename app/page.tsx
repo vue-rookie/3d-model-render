@@ -1,7 +1,7 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Environment, Sphere, Box, Torus } from "@react-three/drei"
+import { OrbitControls, Sphere, Box, Torus } from "@react-three/drei"
 import { Suspense, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
 import Link from "next/link"
@@ -76,7 +76,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <Canvas shadows camera={{ position: [0, 0, 8], fov: 50 }}>
             <Suspense fallback={null}>
-              <Environment preset="night" />
+              {/* 使用本地环境光照替代外部HDRI */}
               <ambientLight intensity={0.2} />
               <directionalLight
                 position={[10, 10, 5]}
