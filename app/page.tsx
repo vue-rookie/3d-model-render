@@ -190,7 +190,7 @@ export default function Home() {
               <Cube className="h-6 w-6 text-cyan-400" />
               <span className="text-lg font-semibold text-white">3D Studio</span>
             </div>
-            <div className="flex items-center space-x-6 text-gray-400">
+            {/* <div className="flex items-center space-x-6 text-gray-400">
               <a href="#" className="hover:text-white transition-colors">
                 文档
               </a>
@@ -200,7 +200,7 @@ export default function Home() {
               <a href="#" className="hover:text-white transition-colors">
                 GitHub
               </a>
-            </div>
+            </div> */}
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
             <p>&copy; 2024 3D Studio. 保留所有权利。</p>
