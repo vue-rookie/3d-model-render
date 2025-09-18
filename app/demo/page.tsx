@@ -1,8 +1,8 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls, useGLTF, Html, Text } from "@react-three/drei"
-import { Suspense, useState } from "react"
+import { OrbitControls, useGLTF, Html, Text, useProgress } from "@react-three/drei"
+import { Suspense, useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
@@ -12,29 +12,44 @@ const modelConfig = {
   name: "火星",
   url: "/mars.glb",
   description: "火星地表模型",
-  scale: 1,
-  position: [0, -1, 0],
+  scale: 0.5,
+  position: [0, -2, 0],
 }
 
 function LoadingSpinner() {
+  const { progress, total, loaded, item } = useProgress()
+  
   return (
     <Html center>
       <div className="flex flex-col items-center space-y-4 text-white min-w-[200px]">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400"></div>
         <p className="text-lg">加载3D模型中...</p>
+        <div className="w-48 bg-slate-700 rounded-full h-2.5 mt-2">
+          <div className="bg-cyan-400 h-2.5 rounded-full" style={{ width: `${progress}%` }}></div>
+        </div>
       </div>
     </Html>
   )
 }
 
+// 预加载模型
+useGLTF.preload(modelConfig.url)
+
 function DemoModel() {
   const modelRef = useRef<any>(null)
   const [loadError, setLoadError] = useState(false)
-  const gltf = useGLTF(modelConfig.url, true)
+  
+  // 使用draco压缩器加快加载速度
+  const gltf = useGLTF(modelConfig.url, true, true)
 
- 
+  useEffect(() => {
+    // 错误处理
+    if (!gltf) {
+      setLoadError(true)
+    }
+  }, [gltf])
 
-  const scene = gltf.scene
+  const scene = gltf?.scene
   if (loadError || !scene) {
     return <FallbackModel />
   }
@@ -46,7 +61,6 @@ function DemoModel() {
         object={scene} 
         scale={modelConfig.scale} 
         position={modelConfig.position} 
-        rotation={modelConfig.rotation} 
       />
     </>
   )
@@ -76,6 +90,17 @@ function FallbackModel() {
 }
 
 export default function DemoPage() {
+  // 延迟加载模型
+  const [showModel, setShowModel] = useState(false)
+  
+  useEffect(() => {
+    // 延迟200ms加载模型，让页面先渲染
+    const timer = setTimeout(() => {
+      setShowModel(true)
+    }, 200)
+    
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <div className="min-h-screen bg-slate-800 text-white">
@@ -92,7 +117,7 @@ export default function DemoPage() {
 
       {/* 3D Scene */}
       <div className="h-screen relative">
-        <Canvas shadows camera={{ position: [0, 0, 8], fov: 50 }} className="bg-gradient-to-b from-slate-700 to-slate-900">
+        <Canvas shadows camera={{ position: [-10, 1, 1], fov: 50 }} className="bg-gradient-to-b from-slate-700 to-slate-900">
           <Suspense fallback={<LoadingSpinner />}>
             {/* 使用本地环境光照替代外部HDRI */}
             <ambientLight intensity={0.5} />
@@ -100,12 +125,12 @@ export default function DemoPage() {
               position={[10, 10, 5]}
               intensity={1.2}
               castShadow
-              shadow-mapSize-width={2048}
-              shadow-mapSize-height={2048}
+              shadow-mapSize-width={1024}
+              shadow-mapSize-height={1024}
             />
             <spotLight position={[-10, 10, 5]} angle={0.3} penumbra={1} intensity={0.7} castShadow />
 
-            <DemoModel />
+            {showModel && <DemoModel />}
 
             {/* Ground */}
             <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -3, 0]}>
@@ -113,7 +138,16 @@ export default function DemoPage() {
               <meshStandardMaterial color="#334155" roughness={0.8} metalness={0.1} />
             </mesh>
 
-            <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} minDistance={2} maxDistance={10} />
+            <OrbitControls 
+              enablePan={true} 
+              enableZoom={true} 
+              enableRotate={true} 
+              minDistance={4} 
+              maxDistance={20}
+              minPolarAngle={-2}
+              maxPolarAngle={Math.PI / 2.5}
+              target={[0, -2, 0]}
+            />
           </Suspense>
         </Canvas>
 
@@ -124,8 +158,6 @@ export default function DemoPage() {
             <li>• 鼠标左键拖拽：旋转视角</li>
             <li>• 鼠标右键拖拽：平移视角</li>
             <li>• 滚轮：缩放</li>
-            <li>• 点击模型上方按钮控制动画</li>
-            <li>• 右上角选择不同的3D模型</li>
           </ul>
         </div>
 
