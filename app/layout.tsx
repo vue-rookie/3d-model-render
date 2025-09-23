@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   generator: '3dModelsOnline',
   icons: {
     icon: '/favicon.png',
-  }
+  },
 }
 
 export default function RootLayout({
@@ -20,6 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="google-adsense-account" content="ca-pub-6182399611487556" />
+      </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         {children}
         <Analytics />
