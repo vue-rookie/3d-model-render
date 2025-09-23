@@ -1,8 +1,9 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls, useGLTF, Html, Text, useProgress } from "@react-three/drei"
+import { OrbitControls, useGLTF, Html, Text, useProgress, Stats, meshBounds } from "@react-three/drei"
 import { Suspense, useState, useEffect } from "react"
+import * as THREE from "three"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
@@ -32,6 +33,9 @@ function LoadingSpinner() {
   )
 }
 
+// 设置模型缓存
+const DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.6/'
+
 // 预加载模型
 useGLTF.preload(modelConfig.url)
 
@@ -54,6 +58,31 @@ function DemoModel() {
     return <FallbackModel />
   }
 
+  // 优化模型
+  useEffect(() => {
+    if (scene) {
+      // 遍历场景中的所有对象，应用性能优化
+      scene.traverse((object) => {
+        // 禁用不必要的阴影
+        if ((object as THREE.Mesh).isMesh) {
+          const mesh = object as THREE.Mesh
+          // 降低阴影质量
+          mesh.castShadow = true
+          mesh.receiveShadow = true
+          
+          // 优化材质
+          if (mesh.material) {
+            const material = mesh.material as THREE.Material
+            // 设置为低精度
+            if ('precision' in material) {
+              (material as any).precision = 'lowp'
+            }
+          }
+        }
+      })
+    }
+  }, [scene])
+
   return (
     <>
       <primitive 
@@ -61,6 +90,7 @@ function DemoModel() {
         object={scene} 
         scale={modelConfig.scale} 
         position={modelConfig.position} 
+        raycast={meshBounds} // 使用简化的射线检测
       />
     </>
   )
@@ -92,8 +122,36 @@ function FallbackModel() {
 export default function DemoPage() {
   // 延迟加载模型
   const [showModel, setShowModel] = useState(false)
+  const [isLowPerformance, setIsLowPerformance] = useState(false)
   
   useEffect(() => {
+    // 检测设备性能
+    const checkPerformance = () => {
+      // 检查是否为移动设备
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      
+      // 检查GPU性能 - 简化检测
+      let isLowPower = false
+      
+      // 检测是否为低端设备
+      if (typeof window !== 'undefined') {
+        // 检查设备内存 (如果可用)
+        if ('deviceMemory' in navigator) {
+          isLowPower = (navigator as any).deviceMemory < 4
+        }
+        
+        // 检查硬件并发性
+        if ('hardwareConcurrency' in navigator) {
+          isLowPower = isLowPower || navigator.hardwareConcurrency < 4
+        }
+      }
+      
+      // 如果是移动设备或低性能GPU，启用低性能模式
+      setIsLowPerformance(isMobile || isLowPower)
+    }
+    
+    checkPerformance()
+    
     // 延迟200ms加载模型，让页面先渲染
     const timer = setTimeout(() => {
       setShowModel(true)
@@ -117,25 +175,40 @@ export default function DemoPage() {
 
       {/* 3D Scene */}
       <div className="h-screen relative">
-        <Canvas shadows camera={{ position: [-10, 1, 1], fov: 50 }} className="bg-gradient-to-b from-slate-700 to-slate-900">
+        <Canvas 
+          shadows
+          camera={{ position: [-10, 1, 1], fov: 50 }} 
+          className="bg-gradient-to-b from-slate-700 to-slate-900"
+          dpr={[1, 2]} // 限制像素比，优化移动设备性能
+          performance={{ min: 0.5 }} // 性能模式
+          gl={{ 
+            powerPreference: 'high-performance',
+            antialias: false, // 禁用抗锯齿
+            depth: true,
+            stencil: false,
+            alpha: false
+          }}
+        >
           <Suspense fallback={<LoadingSpinner />}>
+            {/* 性能监控 */}
+            <Stats />
+            
             {/* 使用本地环境光照替代外部HDRI */}
             <ambientLight intensity={0.5} />
             <directionalLight
               position={[10, 10, 5]}
               intensity={1.2}
               castShadow
-              shadow-mapSize-width={1024}
-              shadow-mapSize-height={1024}
+              shadow-mapSize-width={512} // 降低阴影贴图分辨率
+              shadow-mapSize-height={512}
             />
-            <spotLight position={[-10, 10, 5]} angle={0.3} penumbra={1} intensity={0.7} castShadow />
 
             {showModel && <DemoModel />}
 
-            {/* Ground */}
+            {/* Ground - 简化地面 */}
             <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position={[0, -3, 0]}>
               <planeGeometry args={[20, 20]} />
-              <meshStandardMaterial color="#334155" roughness={0.8} metalness={0.1} />
+              <meshBasicMaterial color="#334155" /> {/* 使用BasicMaterial代替StandardMaterial */}
             </mesh>
 
             <OrbitControls 
