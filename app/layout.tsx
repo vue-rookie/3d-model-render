@@ -55,6 +55,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-adsense-account" content="ca-pub-6182399611487556" />
+        <meta name="baidu_union_verify" content="add1e47677299bf50d5fc9e6e9561c7b"/>
         {/* JSON-LD 结构化数据：网站与组织 */}
         <script
           type="application/ld+json"
