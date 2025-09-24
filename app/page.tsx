@@ -203,7 +203,8 @@ export default function Home() {
             </div> */}
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; 2024 3D Studio. 保留所有权利。</p>
+            <p>&copy; 2025 3D Studio. 保留所有权利。</p>
+            <p>备案号：晋ICP备2025057905号</p>
           </div>
         </div>
       </footer>
