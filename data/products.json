@@ -1,0 +1,102 @@
+[
+  {
+    "name": "火星地形模型",
+    "description": "高精度火星表面地形3D模型，适合科学展示和教育用途。包含真实地形数据，细节丰富，支持多种渲染引擎。",
+    "price": 29.99,
+    "image": "https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=800",
+    "modelUrl": "/models/mars.glb",
+    "downloadUrl": "https://download.example.com/models/mars.zip",
+    "category": "科学",
+    "createdAt": "2025-01-15T08:00:00.000Z"
+  },
+  {
+    "name": "现代办公楼建筑",
+    "description": "精美的现代办公楼3D模型，适合建筑可视化项目。包含完整的外立面、玻璃幕墙和周边环境。",
+    "price": 49.99,
+    "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800",
+    "modelUrl": "/models/office-building.glb",
+    "downloadUrl": "https://download.example.com/models/office-building.zip",
+    "category": "建筑",
+    "createdAt": "2025-01-14T09:30:00.000Z"
+  },
+  {
+    "name": "游戏角色-战士",
+    "description": "游戏级别的战士角色3D模型，包含完整骨骼绑定和多套动画。支持Unity和Unreal引擎。",
+    "price": 79.99,
+    "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800",
+    "modelUrl": "/models/warrior-character.glb",
+    "downloadUrl": "https://download.example.com/models/warrior-character.zip",
+    "category": "角色",
+    "createdAt": "2025-01-13T10:15:00.000Z"
+  },
+  {
+    "name": "北欧风格家具套装",
+    "description": "现代北欧风格家具3D模型套装，包含沙发、茶几、边柜等。适合室内设计和可视化渲染。",
+    "price": 39.99,
+    "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800",
+    "modelUrl": "/models/nordic-furniture.glb",
+    "downloadUrl": "https://download.example.com/models/nordic-furniture.zip",
+    "category": "家具",
+    "createdAt": "2025-01-12T11:45:00.000Z"
+  },
+  {
+    "name": "跑车模型-法拉利488",
+    "description": "高精度法拉利488跑车3D模型，包含完整内饰和外观细节。支持PBR材质，渲染效果真实。",
+    "price": 89.99,
+    "image": "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800",
+    "modelUrl": "/models/ferrari-488.glb",
+    "downloadUrl": "https://download.example.com/models/ferrari-488.zip",
+    "category": "交通",
+    "createdAt": "2025-01-11T14:20:00.000Z"
+  },
+  {
+    "name": "热带植物模型包",
+    "description": "包含20种热带植物3D模型，适合景观设计和游戏场景。每个植物都有多个LOD级别。",
+    "price": 19.99,
+    "image": "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=800",
+    "modelUrl": "/models/tropical-plants.glb",
+    "downloadUrl": "https://download.example.com/models/tropical-plants.zip",
+    "category": "自然",
+    "createdAt": "2025-01-10T15:30:00.000Z"
+  },
+  {
+    "name": "中式古建筑-亭台楼阁",
+    "description": "精美的中式古建筑3D模型，包含亭台、楼阁、廊道等。细节丰富，适合文化展示和游戏场景。",
+    "price": 59.99,
+    "image": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800",
+    "modelUrl": "/models/chinese-pavilion.glb",
+    "downloadUrl": "https://download.example.com/models/chinese-pavilion.zip",
+    "category": "建筑",
+    "createdAt": "2025-01-09T16:00:00.000Z"
+  },
+  {
+    "name": "科幻飞船",
+    "description": "未来科幻风格飞船3D模型，包含完整的外观和内部结构。适合科幻游戏和动画制作。",
+    "price": 69.99,
+    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800",
+    "modelUrl": "/models/sci-fi-spaceship.glb",
+    "downloadUrl": "https://download.example.com/models/sci-fi-spaceship.zip",
+    "category": "科学",
+    "createdAt": "2025-01-08T17:15:00.000Z"
+  },
+  {
+    "name": "女性角色-魔法师",
+    "description": "精美的女性魔法师角色模型，包含多套服装和道具。适合RPG游戏和动画制作。",
+    "price": 74.99,
+    "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+    "modelUrl": "/models/mage-character.glb",
+    "downloadUrl": "https://download.example.com/models/mage-character.zip",
+    "category": "角色",
+    "createdAt": "2025-01-07T18:30:00.000Z"
+  },
+  {
+    "name": "城市街道场景",
+    "description": "完整的城市街道场景3D模型，包含建筑、道路、路灯、车辆等。适合城市规划和游戏开发。",
+    "price": 99.99,
+    "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800",
+    "modelUrl": "/models/city-street.glb",
+    "downloadUrl": "https://download.example.com/models/city-street.zip",
+    "category": "建筑",
+    "createdAt": "2025-01-06T19:45:00.000Z"
+  }
+]

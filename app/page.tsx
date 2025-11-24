@@ -2,17 +2,18 @@
 
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Sphere, Box, Torus } from "@react-three/drei"
-import { Suspense, useRef } from "react"
+import { Suspense, useRef, useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowRight, Cable as Cube, User, Zap, Play } from "lucide-react"
+import { ArrowRight, Cable as Cube, User, Zap, Play, Phone, MessageCircle, X, Copy, Check, LogOut } from "lucide-react"
+import { useAuth } from "@/lib/hooks/useAuth"
 
 function AnimatedGeometry() {
-  const sphereRef = useRef<any>()
-  const boxRef = useRef<any>()
-  const torusRef = useRef<any>()
+  const sphereRef = useRef<any>(null)
+  const boxRef = useRef<any>(null)
+  const torusRef = useRef<any>(null)
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime()
@@ -47,6 +48,18 @@ function AnimatedGeometry() {
 }
 
 export default function Home() {
+  const [showContact, setShowContact] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const { user, isLoggedIn, logout } = useAuth()
+
+  const handleCopy = (text: string) => {
+    if (typeof window !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(text)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-black dark">
       <header className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-800">
@@ -59,12 +72,29 @@ export default function Home() {
             <a href="#features" className="text-gray-300 hover:text-white transition-colors">
               功能
             </a>
-            {/* <a href="#examples" className="text-gray-300 hover:text-white transition-colors">
-              示例
-            </a>
-            <a href="#about" className="text-gray-300 hover:text-white transition-colors">
-              关于
-            </a> */}
+            <Link href="/products" className="text-gray-300 hover:text-white transition-colors">
+              商品列表
+            </Link>
+            {isLoggedIn ? (
+              <>
+                <div className="flex items-center gap-2 text-gray-300">
+                  <User className="h-4 w-4" />
+                  <span>{user?.username}</span>
+                </div>
+                <Button
+                  onClick={logout}
+                  variant="outline"
+                  className="text-gray-300 border-gray-700 hover:text-white hover:bg-gray-800"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  退出登录
+                </Button>
+              </>
+            ) : (
+              <Link href="/login" className="text-gray-300 hover:text-white transition-colors">
+                登录
+              </Link>
+            )}
             <Link href="/models">
               <Button className="bg-white hover:bg-gray-800 text-black">开始使用</Button>
             </Link>
@@ -175,13 +205,100 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">准备开始了吗？</h2>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">立即体验我们的3D模型查看器，探索无限的创意可能性</p>
-          <Link href="/models">
-            <Button size="lg" className="text-lg px-8 py-4 bg-white  hover:bg-gray-100">
-              开始探索 <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/products">
+              <Button size="lg" className="text-lg px-8 py-4 bg-cyan-500 hover:bg-cyan-600 text-white">
+                浏览商品 <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/models">
+              <Button size="lg" className="text-lg px-8 py-4 bg-white hover:bg-gray-100 text-black">
+                开始探索 <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
+
+      {/* 固定客服联系按钮 */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+        <button
+          onClick={() => setShowContact(true)}
+          className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-3 rounded-full shadow-lg transition-all hover:scale-105"
+          title="客服联系"
+        >
+          <Phone className="h-5 w-5" />
+          <span className="hidden sm:inline">客服联系</span>
+        </button>
+      </div>
+
+      {/* 客服联系弹窗 */}
+      {showContact && (
+        <>
+          {/* 背景遮罩 */}
+          <div
+            className="fixed inset-0 bg-black/50 z-50"
+            onClick={() => setShowContact(false)}
+          />
+          {/* 弹窗内容 */}
+          <div className="fixed bottom-24 right-6 z-50 bg-gray-800 border border-gray-700 rounded-lg shadow-2xl p-6 w-80 animate-in slide-in-from-bottom-5">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-white">客服联系</h3>
+              <button
+                onClick={() => setShowContact(false)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              {/* 电话 */}
+              <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-cyan-500/20 rounded-full">
+                    <Phone className="h-5 w-5 text-cyan-400" />
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-sm">电话</p>
+                    <p className="text-white font-semibold">15525028182</p>
+                  </div>
+                </div>
+               
+              </div>
+
+              {/* 微信 */}
+              <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-green-500/20 rounded-full">
+                    <MessageCircle className="h-5 w-5 text-green-400" />
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-sm">微信</p>
+                    <p className="text-white font-semibold">qq8181227</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleCopy("qq8181227")}
+                  className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm flex items-center gap-2"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-4 w-4" />
+                      已复制
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4" />
+                      复制
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       <footer className="py-12 bg-gray-900 border-t border-gray-800">
         <div className="container mx-auto px-4">
@@ -203,6 +320,23 @@ export default function Home() {
             </div> */}
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
+            <div className="mb-4">
+              <p className="text-white font-semibold mb-2">客服联系</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a 
+                  href="tel:15525028182" 
+                  className="flex items-center gap-2 text-gray-300 hover:text-cyan-400 transition-colors"
+                >
+                  <Phone className="h-4 w-4" />
+                  <span>电话：15525028182</span>
+                </a>
+                <span className="hidden sm:inline text-gray-600">|</span>
+                <div className="flex items-center gap-2 text-gray-300">
+                  <MessageCircle className="h-4 w-4" />
+                  <span>微信：qq8181227</span>
+                </div>
+              </div>
+            </div>
             <p>&copy; 2025 3D Studio. 保留所有权利。</p>
             <p>备案号：晋ICP备2025057905号</p>
           </div>

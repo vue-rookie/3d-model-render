@@ -51,45 +51,43 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: '3dModelsOnline',
+    url: 'https://timebackward.com',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://timebackward.com/search?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: '3dModelsOnline',
+      url: 'https://timebackward.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://timebackward.com/favicon.png',
+      },
+    },
+  }
+
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-adsense-account" content="ca-pub-6182399611487556" />
-        <meta name="baidu_union_verify" content="add1e47677299bf50d5fc9e6e9561c7b"/>
-        {/* JSON-LD 结构化数据：网站与组织 */}
+        <meta name="baidu_union_verify" content="add1e47677299bf50d5fc9e6e9561c7b" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebSite',
-              name: '3dModelsOnline',
-              url: 'https://timebackward.com',
-              potentialAction: {
-                '@type': 'SearchAction',
-                target: 'https://timebackward.com/search?q={search_term_string}',
-                'query-input': 'required name=search_term_string',
-              },
-              publisher: {
-                '@type': 'Organization',
-                name: '3dModelsOnline',
-                url: 'https://timebackward.com',
-                logo: {
-                  '@type': 'ImageObject',
-                  url: 'https://timebackward.com/favicon.png',
-                },
-              },
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6182399611487556"
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
         {children}
         <Analytics />
       </body>
