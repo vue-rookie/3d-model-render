@@ -65,10 +65,10 @@ export async function POST(request: NextRequest) {
     }
 
     // 虎皮椒配置参数
-    const XUNHUPAY_APPID = process.env.XUNHUPAY_APPID
-    const XUNHUPAY_APPSECRET = process.env.XUNHUPAY_APPSECRET
-    const BACKEND_URL = process.env.BACK_URL
-    const WAP_NAME = process.env.WAP_NAME
+    const XUNHUPAY_APPID = process.env.XUNHUPAY_APPID || '201906175208'
+    const XUNHUPAY_APPSECRET = process.env.XUNHUPAY_APPSECRET || '49e2d451da2383abe2cdf7323d6c2832'
+    const BACKEND_URL = process.env.BACK_URL ||'https://timebackward.com'
+    const WAP_NAME = process.env.WAP_NAME || '3D Studio'
 
     if (!XUNHUPAY_APPID || !XUNHUPAY_APPSECRET || !BACKEND_URL || !WAP_NAME) {
       return NextResponse.json(
