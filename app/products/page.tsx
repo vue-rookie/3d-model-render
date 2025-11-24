@@ -363,7 +363,7 @@ export default function ProductsPage() {
                     </div>
 
                     <div className="flex gap-2">
-                      <Link href={`/models?model=${product.modelUrl}`} className="flex-1">
+                      <Link href={`/products/${product.id}`} className="flex-1">
                         <Button className="w-full bg-gray-800 hover:bg-gray-700 text-white cursor-pointer">
                           <Eye className="mr-2 h-4 w-4" />
                           预览
